@@ -7,10 +7,10 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
     <!-- Including the Mapbox GL CSS file -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
 
     <!-- Including the Mapbox GL JS file -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 
     <style>
         /* CSS styles for heading and paragraphs */
@@ -105,6 +105,7 @@
             'pk.eyJ1Ijoia2NoYW81ODkiLCJhIjoiY21rb2ppZ3ZnMDE4ODNxcHBkd2c2cTU5biJ9.3r2ICzOPgm8Ce-m6q0GcJQ';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
+            projection: 'albers',
             style: 'mapbox://styles/mapbox/light-v10', // style URL
             zoom: 4, // starting zoom
             center: [-98, 39] // starting center
