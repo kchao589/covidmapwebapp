@@ -10,7 +10,6 @@ body {
     width: 100%;
 }
 
-/* the layout of the legend panel */
 #legend {
     position: absolute;
     bottom: 0;
@@ -25,14 +24,12 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-/* each line for a break */
 .break {
     position: relative;
     margin: 0px;
     padding: 0px;
 }
 
-/* basic style for a dot/circle */
 .dot {
     display: inline-block;
     margin-top: 5px;
@@ -40,7 +37,6 @@ body {
     opacity: 0.6;
 }
 
-/* the label for the dot */
 .dot-label {
     position: absolute;
     top: 0;
@@ -48,30 +44,6 @@ body {
     font-style: italic;
 }
 
-/* the text color of a hyper link */
 a {
     color: black
-}
-
-#title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 20px;
-    margin-left: 20px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 25pt;
-    color: white
-}
-
-
-#subtitle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 70px;
-    margin-left: 190px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15pt;
-    color: white
 }

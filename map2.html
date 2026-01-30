@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+    <link href="css/map2.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <style>
         body {
@@ -21,7 +22,6 @@
             width: 100%;
         }
 
-        /* the layout of the legend panel */
         #legend {
             position: absolute;
             bottom: 0;
@@ -36,14 +36,12 @@
             font-family: 'Open Sans', sans-serif;
         }
 
-        /* each line for a break */
         .break {
             position: relative;
             margin: 0px;
             padding: 0px;
         }
 
-        /* basic style for a dot/circle */
         .dot {
             display: inline-block;
             margin-top: 5px;
@@ -51,7 +49,6 @@
             opacity: 0.6;
         }
 
-        /* the label for the dot */
         .dot-label {
             position: absolute;
             top: 0;
@@ -59,7 +56,6 @@
             font-style: italic;
         }
 
-        /* the text color of a hyper link */
         a {
             color: black
         }
@@ -69,24 +65,21 @@
 <body>
     <div id="map"></div>
     <div id="legend"></div>
-    <script>
+    <script src="js/map2.js">
         mapboxgl.accessToken =
             'pk.eyJ1Ijoia2NoYW81ODkiLCJhIjoiY21rb2ppZ3ZnMDE4ODNxcHBkd2c2cTU5biJ9.3r2ICzOPgm8Ce-m6q0GcJQ';
         let map = new mapboxgl.Map({
-            container: 'map', // container ID
+            container: 'map',
+            projection: 'albers',
             style: 'mapbox://styles/mapbox/dark-v10',
-            zoom: 0, // starting zoom
-            minZoom: 4, // minimum zoom level of the map
-            center: [-98, 39] // starting center
+            zoom: 0,
+            minZoom: 4,
+            center: [-98, 39]
         });
         const grades = [4, 5, 6],
             colors = ['rgb(208,209,230)', 'rgb(103,169,207)', 'rgb(1,108,89)'],
             radii = [5, 15, 20];
-        //load data to the map as new layers.
-        //map.on('load', function loadingData() {
-        map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
-            // when loading a geojson, there are two steps
-            // add a source of the data and then add the layer out of the source
+        map.on('load', () => {
             map.addSource('cases', {
                 type: 'geojson',
                 data: 'assets/us-covid-2020-counts.json'
@@ -95,9 +88,8 @@
                 'id': 'covid-cases',
                 'type': 'circle',
                 'source': 'cases',
-                'minzoom': 5,
+                'minzoom': 0,
                 'paint': {
-                    // increase the radii of the circle as cases increase
                     'circle-radius': {
                         'property': 'cases',
                         'stops': [
@@ -106,7 +98,6 @@
                             [grades[2], radii[2]]
                         ]
                     },
-                    // change the color of the circle as cases increase
                     'circle-color': {
                         'property': 'cases',
                         'stops': [
@@ -120,7 +111,7 @@
                     'circle-opacity': 0.6
                 }
             });
-            // click on tree to view magnitude in a popup
+
             map.on('click', 'covid-cases', (event) => {
                 new mapboxgl.Popup()
                     .setLngLat(event.features[0].geometry.coordinates)
@@ -128,16 +119,12 @@
                     .addTo(map);
             });
         });
-        // create legend
+
         const legend = document.getElementById('legend');
-        //set up legend grades and labels
         var labels = ['<strong>Cases</strong>'],
             vbreak;
-        //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < grades.length; i++) {
             vbreak = grades[i];
-            // you need to manually adjust the radius of each dot on the legend
-            // in order to make sure the legend can be properly referred to the dot on the map.
             dot_radii = 2 * radii[i];
             labels.push(
                 '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: ' + dot_radii +
@@ -145,10 +132,8 @@
                 dot_radii + 'px; "></i> <span class="dot-label" style="top: ' + dot_radii / 2 + 'px;">' + vbreak +
                 '</span></p>');
         }
-        // add the data source
         const source =
             '<p style="text-align: right; font-size:10pt">Source: <a href="https://earthquake.usgs.gov/earthquakes/">USGS</a></p>';
-        // combine all the html codes.
         legend.innerHTML = labels.join('') + source;
     </script>
 
